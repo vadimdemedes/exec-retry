@@ -1,4 +1,4 @@
-# exec-retry
+# exec-retry [![Circle CI](https://circleci.com/gh/vdemedes/exec-retry.svg?style=svg)](https://circleci.com/gh/vdemedes/exec-retry)
 
 `child_process.exec` with a retry functionality using [retry](https://npmjs.org/package/retry).
 
@@ -49,6 +49,8 @@ ps.stdout.on('data', function (data) {
 
 
 ### Tests
+
+[![Circle CI](https://circleci.com/gh/vdemedes/exec-retry.svg?style=svg)](https://circleci.com/gh/vdemedes/exec-retry)
 
 ```
 $ make test
