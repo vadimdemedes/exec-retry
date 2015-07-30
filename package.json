@@ -1,0 +1,35 @@
+{
+  "name": "exec-retry",
+  "version": "1.0.0",
+  "description": "child_process#exec with retry on failure",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vdemedes/exec-retry.git"
+  },
+  "keywords": [
+    "exec"
+  ],
+  "author": "Vadim Demedes <vdemedes@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vdemedes/exec-retry/issues"
+  },
+  "homepage": "https://github.com/vdemedes/exec-retry#readme",
+  "devDependencies": {
+    "fake-exec": "^1.0.2",
+    "make-lint": "vdemedes/make-lint",
+    "tape": "^4.0.1"
+  },
+  "dependencies": {
+    "fake-exec": "^1.0.3",
+    "retry": "^0.6.1",
+    "through2": "^2.0.0"
+  },
+  "files": [
+    "index.js"
+  ]
+}
