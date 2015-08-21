@@ -46,7 +46,9 @@ function execRetry (command, options, callback) {
 
   operation.attempt(function () {
     let ps = exec(command, options, function (err) {
-      if (operation.retry(err)) {
+      let isKilled = err && err.killed && err.signal === 'SIGTERM';
+
+      if (!isKilled && operation.retry(err)) {
         return;
       }
 
