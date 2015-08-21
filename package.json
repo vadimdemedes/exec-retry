@@ -22,7 +22,7 @@
   "devDependencies": {
     "fake-exec": "^1.0.2",
     "make-lint": "vdemedes/make-lint",
-    "tape": "^4.0.1"
+    "mocha": "^2.2.5"
   },
   "dependencies": {
     "retry": "^0.6.1",

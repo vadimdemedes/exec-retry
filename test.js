@@ -4,8 +4,8 @@
  * Dependencies
  */
 
+const assert = require('assert');
 const fake = require('fake-exec');
-const test = require('tape');
 const exec = require('./');
 
 
@@ -13,57 +13,62 @@ const exec = require('./');
  * Tests
  */
 
-test ('successful first attempt', function (t) {
-  t.plan(1);
+describe ('exec-retry', function () {
 
-  fake('ls');
+  it ('successful first attempt', function (done) {
+    fake('ls');
 
-  exec('ls', function (err) {
-    t.equal(err, null);
+    exec('ls', done);
   });
 
-});
+  it ('retry failed command', function (done) {
+    fake('ls', 1);
 
-test ('retry failed command', function (t) {
-  t.plan(1);
+    setTimeout(function () {
+      fake('ls', 0);
+    }, 1000);
 
-  fake('ls', 1);
-
-  setTimeout(function () {
-    fake('ls', 0);
-  }, 2000);
-
-  exec('ls', function (err) {
-    t.equal(err, null);
-  });
-});
-
-test ('stop retrying after N tries', function (t) {
-  t.plan(1);
-
-  fake('ls', 1);
-
-  exec.timeouts = {
-    retries: 2
-  };
-
-  exec('ls', function (err) {
-    t.equal(typeof err, 'object');
-  });
-});
-
-test ('stream stdout', function (t) {
-  fake('ping google.com', 1);
-
-  setTimeout(function () {
-    fake.clear();
-  }, 2000);
-
-  let ps = exec('ping google.com', { timeout: 5000 }, function () {
-    t.end();
+    exec('ls', done);
   });
 
-  ps.stdout.on('data', function (data) {
-    t.equal(/64 bytes/.test(data), true);
+  it ('stop retrying after N tries', function (done) {
+    this.timeout(4000);
+
+    fake('ls', 1);
+
+    exec.timeouts = {
+      retries: 2
+    };
+
+    exec('ls', function (err) {
+      assert(typeof err === 'object', 'no error passed');
+
+      done();
+    });
   });
+
+  it ('stream stdout', function (done) {
+    this.timeout(6000);
+
+    fake('ping google.com', 1);
+
+    setTimeout(function () {
+      fake.clear();
+    }, 1000);
+
+    let hasData = false;
+
+    let ps = exec('ping google.com', { timeout: 2000 }, function () {
+      assert(hasData, 'data was not received');
+
+      done();
+    });
+
+    ps.stdout.on('data', function (data) {
+      hasData = true;
+
+      assert(/64 bytes/.test(data), 'unknown output');
+    });
+  });
+
 });
