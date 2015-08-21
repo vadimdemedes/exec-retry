@@ -36,11 +36,7 @@ describe ('exec-retry', function () {
 
     fake('ls', 1);
 
-    exec.timeouts = {
-      retries: 2
-    };
-
-    exec('ls', function (err) {
+    exec('ls', { retries: 2 }, function (err) {
       assert(typeof err === 'object', 'no error passed');
 
       done();

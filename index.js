@@ -17,15 +17,6 @@ exports = module.exports = execRetry;
 
 
 /**
- * Configuration
- *
- * @see https://www.npmjs.com/package/retry#retry-timeouts-options
- */
-
-exports.timeouts = {};
-
-
-/**
  * Exec with retry
  */
 
@@ -39,10 +30,15 @@ function execRetry (command, options, callback) {
     callback = noop;
   }
 
+  // retry 2 times by default
+  if (!options.retries) {
+    options.retries = 2;
+  }
+
   let stdout = stream();
   let stderr = stream();
 
-  let operation = retry.operation(exports.timeouts);
+  let operation = retry.operation(options);
 
   operation.attempt(function () {
     let ps = exec(command, options, function (err) {
@@ -62,8 +58,8 @@ function execRetry (command, options, callback) {
       callback.apply(null, arguments);
     });
 
-    // fake-exec does not return
-    // ChildProcess object
+    // fake-exec module does not return
+    // a ChildProcess object
     if (!ps) return;
 
     pipeData(ps.stdout, stdout);

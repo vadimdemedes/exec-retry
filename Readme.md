@@ -28,11 +28,7 @@ exec('curl https://www.roqet.io', function (err, stdout, stderr) {
 
 
 // now set max retries number
-exec.timeouts = {
-  retries: 3
-};
-
-exec('curl https://www.roqet.io', function (err, stdout, stderr) {
+exec('curl https://www.roqet.io', { retries: 3 }, function (err, stdout, stderr) {
   // fails after 3 retries
 });
 
