@@ -13,7 +13,7 @@ const exec = require('child_process').exec;
  * Expose exec-retry
  */
 
-exports = module.exports = execRetry;
+module.exports = execRetry;
 
 
 /**
