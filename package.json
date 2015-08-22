@@ -1,6 +1,6 @@
 {
   "name": "exec-retry",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "child_process#exec with retry on failure",
   "main": "index.js",
   "scripts": {
