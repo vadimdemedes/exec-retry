@@ -55,4 +55,4 @@ $ make test
 
 ### License
 
-exec-retry is released under the MIT license.
+MIT © [Vadym Demedes](http://vadimdemedes.com)
