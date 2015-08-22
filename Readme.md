@@ -7,7 +7,8 @@
 
 - Retry a command until success
 - Set retry options (see [retry](https://www.npmjs.com/package/retry#retry-timeouts-options))
-- It even returns streams, just like node's `exec`, oh wow
+- It even returns streams, just like node's `exec`, **oh wow**
+- Uses [debug](https://npmjs.org/package/debug) to log useful information
 
 
 ### Installation

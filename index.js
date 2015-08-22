@@ -6,6 +6,7 @@
 
 const through = require('through2');
 const retry = require('retry');
+const debug = require('debug')('exec-retry');
 const exec = require('child_process').exec;
 
 
@@ -45,7 +46,13 @@ function execRetry (command, options, callback) {
       let isKilled = err && err.killed && err.signal === 'SIGTERM';
 
       if (!isKilled && operation.retry(err)) {
+        debug('retry "%s"', command);
+
         return;
+      }
+
+      if (isKilled) {
+        debug('"%s" was killed by SIGTERM, not retrying', command);
       }
 
       if (err) {
@@ -60,7 +67,9 @@ function execRetry (command, options, callback) {
 
     // fake-exec module does not return
     // a ChildProcess object
-    if (!ps) return;
+    if (!ps) {
+      return;
+    }
 
     pipeData(ps.stdout, stdout);
     pipeData(ps.stderr, stderr);
